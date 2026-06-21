@@ -17,19 +17,28 @@ export function StatCards() {
     if (kb < 1024) return `${kb.toFixed(1)} KB`
 
     const mb = kb / 1024
-    if (mb < 1024) return `${mb.toFixed(1)} MB`
-
-    return `${(mb / 1024).toFixed(1)} GB`
+    return `${mb.toFixed(1)} MB`
   }
 
   const fetchStats = async () => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
+
+    if (!user) {
+      setTotalUploads(0)
+      setStorageUsed('0 KB')
+      setImages(0)
+      setDocuments(0)
+      return
+    }
+
     const { data, error } = await supabase
       .from('media')
       .select('file_type, file_size')
+      .eq('user_id', user.id)
 
-    if (error) {
-      return
-    }
+    if (error) return
 
     const files = data || []
 
@@ -42,16 +51,18 @@ export function StatCards() {
       file.file_type?.startsWith('image')
     ).length
 
-    const documentCount = files.length - imageCount
-
     setTotalUploads(files.length)
     setStorageUsed(formatSize(totalSize))
     setImages(imageCount)
-    setDocuments(documentCount)
+    setDocuments(files.length - imageCount)
   }
 
   useEffect(() => {
     fetchStats()
+
+    const interval = setInterval(fetchStats, 2000)
+
+    return () => clearInterval(interval)
   }, [])
 
   const stats = [
@@ -98,9 +109,7 @@ export function StatCards() {
             {stat.label}
           </p>
 
-          <p className="text-foreground text-2xl font-bold">
-            {stat.value}
-          </p>
+          <p className="text-foreground text-2xl font-bold">{stat.value}</p>
         </div>
       ))}
     </div>
