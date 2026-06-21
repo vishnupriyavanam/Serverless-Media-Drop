@@ -41,7 +41,6 @@ export function FileGallery() {
       .order('created_at', { ascending: false })
 
     if (error) {
-      console.error('FETCH ERROR:', error)
       setLoading(false)
       return
     }

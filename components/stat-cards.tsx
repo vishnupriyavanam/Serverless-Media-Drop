@@ -28,7 +28,6 @@ export function StatCards() {
       .select('file_type, file_size')
 
     if (error) {
-      console.error('STATS ERROR:', error)
       return
     }
 

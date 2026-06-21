@@ -30,7 +30,6 @@ export function Sidebar() {
 
   return (
     <aside className="w-64 bg-sidebar border-r border-sidebar-border h-screen flex flex-col">
-      {/* Logo */}
       <div className="p-6 border-b border-sidebar-border">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-lg bg-sidebar-primary flex items-center justify-center">
@@ -43,7 +42,6 @@ export function Sidebar() {
         </div>
       </div>
 
-      {/* Navigation */}
       <nav className="flex-1 p-6 space-y-2">
         {navItems.map((item) => {
           const Icon = item.icon
@@ -65,24 +63,7 @@ export function Sidebar() {
         })}
       </nav>
 
-      {/* Footer */}
-      <div className="p-6 border-t border-sidebar-border space-y-3">
-        <div className="px-4 py-3 rounded-lg flex items-center gap-3 text-sidebar-foreground hover:bg-sidebar-accent transition-colors">
-          <div className="w-8 h-8 rounded-full bg-sidebar-primary/50 flex items-center justify-center text-sm font-bold text-sidebar-primary-foreground">
-            U
-          </div>
-
-          <div className="flex-1 min-w-0">
-            <p className="font-medium text-sm truncate">
-              User Account
-            </p>
-
-            <p className="text-xs text-sidebar-foreground/70 truncate">
-              Logged In
-            </p>
-          </div>
-        </div>
-
+      <div className="p-6 border-t border-sidebar-border">
         <button
           onClick={handleLogout}
           className="w-full px-4 py-3 rounded-lg flex items-center gap-3 text-sidebar-foreground hover:bg-sidebar-accent transition-colors"

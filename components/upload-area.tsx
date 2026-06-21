@@ -81,7 +81,6 @@ export function UploadArea({ onUpload }: UploadAreaProps) {
         window.location.reload()
       }, 1000)
     } catch (error: any) {
-      console.error('UPLOAD ERROR:', error)
       setUploadStatus('error')
       setProgress(20)
       setMessage(error?.message || 'Upload failed')
